@@ -1,5 +1,6 @@
 var express = require('express');// static 
-
+var mongoss = require('mongoose');
+mongoss.Promise = global.Promise;
 var app = express();
 // middle ware 
 app.use(express.urlencoded({ extended: false }));
@@ -9,6 +10,14 @@ app.use('/auth', module_auth);
 
 var token = require('./api/token');
 app.use(token);
+// mongo db
+let option = { useNewUrlParser: true };
+const urlMongodb = "mongodb://34.126.85.26:27017/k22020";
+mongoss.connect(urlMongodb, option).then(() => {
+    console.log("connect mongo ok");
+}, () => {
+    console.log("connect mongo fail");
+});
 
 var module_Info = require('./api/info');
 app.use('/info', module_Info);
