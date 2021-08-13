@@ -8,8 +8,6 @@ app.use(express.urlencoded({ extended: false }));
 var module_auth = require('./api/authentication');
 app.use('/auth', module_auth);
 
-var token = require('./api/token');
-app.use(token);
 // mongo db
 let option = { useNewUrlParser: true };
 const urlMongodb = "mongodb://34.126.85.26:27017/k22020";
@@ -18,7 +16,11 @@ mongoss.connect(urlMongodb, option).then(() => {
 }, () => {
     console.log("connect mongo fail");
 });
+var data = require('./api/dataControl');
+app.use('/data', data);
 
+var token = require('./api/token');
+app.use(token);
 var module_Info = require('./api/info');
 app.use('/info', module_Info);
 
