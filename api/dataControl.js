@@ -4,7 +4,6 @@ var jwt = require("jsonwebtoken");
 var fs = require('fs');
 var privatekey = fs.readFileSync('./data/privatekey.txt');
 var userdataModel = require('../model/userdata');
-
 router.route("/signup").post(signup);
 router.route("/signin").post(signin);
 async function signup(req, res) {
@@ -14,7 +13,7 @@ async function signup(req, res) {
         res.status(400).send(" user unavailabe");
     }
     else {
-        let token = jwt.sign({ username: req.body.username }, privatekey, { expiresIn: "30m" });
+        let token = jwt.sign({ username: req.body.username }, privatekey, { expiresIn: "1m" });
         await userdataModel.create({
             username: req.body.username,
             password: req.body.password,
@@ -42,7 +41,7 @@ async function signin(req, res) {
             let token = user.token;
             jwt.verify(token, privatekey, (err, decode) => {
                 if (err) {
-                    let newtoken = jwt.sign({ username: req.body.username }, privatekey, { expiresIn: "30m" });
+                    let newtoken = jwt.sign({ username: req.body.username }, privatekey, { expiresIn: "1m" });
                     user.token = newtoken;
                     user.save();
                     res.status(200).send(newtoken);
@@ -62,4 +61,5 @@ async function signin(req, res) {
         res.status(400).send(" user name invalid ");
     }
 }
+
 module.exports = router;

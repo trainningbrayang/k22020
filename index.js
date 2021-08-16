@@ -16,8 +16,10 @@ mongoss.connect(urlMongodb, option).then(() => {
 }, () => {
     console.log("connect mongo fail");
 });
+
 var data = require('./api/dataControl');
 app.use('/data', data);
+
 var token = require('./api/token');
 app.use(token);
 

@@ -10,7 +10,7 @@ var MiddleWareTest = function (req, res, next) {
                 res.status(401).send("Access denied");
             }
             else {
-                req.username = decode.userid;
+                req.username = decode.username;
                 next();
             }
         })
