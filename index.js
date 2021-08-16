@@ -18,9 +18,9 @@ mongoss.connect(urlMongodb, option).then(() => {
 });
 var data = require('./api/dataControl');
 app.use('/data', data);
-
 var token = require('./api/token');
 app.use(token);
+
 var module_Info = require('./api/info');
 app.use('/info', module_Info);
 
