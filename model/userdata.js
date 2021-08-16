@@ -13,16 +13,7 @@ var userdataSchema = new Schema(
         token: {
             type: String,
             require: true
-        },
-        name: {
-            type: String
-        },
-        age: {
-            type: Number,
-            require: false
         }
-
-
     }
 )
 module.exports = mongoose.model('userdata', userdataSchema, 'userdata');

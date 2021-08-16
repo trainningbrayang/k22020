@@ -4,11 +4,13 @@ var jwt = require("jsonwebtoken");
 var fs = require('fs');
 var privatekey = fs.readFileSync('./data/privatekey.txt');
 var userdataModel = require('../model/userdata');
+var infoModel = require('../model/infoModel');
 router.route("/signup").post(signup);
 router.route("/signin").post(signin);
 async function signup(req, res) {
 
     let user = await userdataModel.findOne({ "username": req.body.username });
+
     if (user != undefined) {
         res.status(400).send(" user unavailabe");
     }
@@ -22,13 +24,19 @@ async function signup(req, res) {
             age: req.body.age
         }).then(() => {
 
-            res.status(200).send(token);
 
         }, (err) => {
 
             res.status(400).send(" signup fail " + err);
 
         });
+        // create info 
+        await infoModel.create({
+            username: req.body.username,
+            name: req.body.name,
+            age: req.body.age
+        });
+        res.status(200).send(token);
     }
 
 }

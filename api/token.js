@@ -11,6 +11,7 @@ var MiddleWareTest = function (req, res, next) {
             }
             else {
                 req.username = decode.username;
+                req.token = token;
                 next();
             }
         })
